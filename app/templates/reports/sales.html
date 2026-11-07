@@ -1,0 +1,7 @@
+{% extends "appbuilder/base.html" %}
+{% block content %}
+<div class="container-fluid"><h2>Reporte de ventas por período</h2>
+<form method="get" class="form-inline" style="margin: 20px 0"><label>Desde <input class="form-control" type="date" name="start" value="{{ start }}"></label><label style="margin-left:10px">Hasta <input class="form-control" type="date" name="end" value="{{ end }}"></label><label style="margin-left:10px">Pago <select class="form-control" name="payment_method"><option value="">Todos</option>{% for method in ['Efectivo','QR','Tarjeta','Transferencia'] %}<option {% if payment_method == method %}selected{% endif %}>{{ method }}</option>{% endfor %}</select></label><button class="btn btn-primary" style="margin-left:10px">Filtrar</button></form>
+<div class="alert alert-info">Ventas: <strong>{{ rows|length }}</strong> | Total: <strong>Bs {{ '%.2f'|format(total) }}</strong></div>
+<table class="table table-bordered table-striped"><thead><tr><th>Fecha</th><th>Cliente</th><th>Concepto</th><th>Método</th><th>Estado</th><th class="text-right">Monto (Bs)</th></tr></thead><tbody>{% for row in rows %}<tr><td>{{ row.sale_date }}</td><td>{{ row.client }}</td><td>{{ row.concept }}</td><td>{{ row.payment_method }}</td><td>{{ row.status }}</td><td class="text-right">{{ '%.2f'|format(row.amount) }}</td></tr>{% else %}<tr><td colspan="6">No hay ventas para los filtros indicados.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}
