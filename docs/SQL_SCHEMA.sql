@@ -1,0 +1,4 @@
+-- Diagrama lógico resumido. Las tablas se crean desde app/models.py.
+-- clients (1) ----< memberships
+-- clients (1) ----< enrollments >---- (1) disciplines >---- (1) trainers
+-- clients (1) ----< sales >---- (0..1) memberships
