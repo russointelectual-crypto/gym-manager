@@ -8,6 +8,7 @@ instance/
 *.sqlite
 *.sqlite3
 *.log
+*.tar.gz
 .DS_Store
 .vscode/
 .idea/
