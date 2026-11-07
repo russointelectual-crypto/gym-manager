@@ -1,5 +1,4 @@
 """CRUD views and business validations for Flask-AppBuilder."""
-from flask import flash
 from flask_appbuilder import ModelView
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from sqlalchemy import func

@@ -7,7 +7,7 @@ from flask_appbuilder import BaseView, expose, has_access
 from sqlalchemy import func
 
 from app import appbuilder, db
-from app.models import Client, Discipline, Enrollment, Membership, Sale
+from app.models import Discipline, Enrollment, Membership, Sale, Trainer
 
 
 def parse_date(value, fallback):
@@ -65,19 +65,15 @@ class ReportsView(BaseView):
                 Discipline.category,
                 Discipline.capacity,
                 func.count(Enrollment.id).label("enrolled"),
-                TrainerName.full_name.label("trainer_name"),
+                Trainer.full_name.label("trainer_name"),
             )
             .outerjoin(Enrollment, (Enrollment.discipline_id == Discipline.id) & (Enrollment.status == "Activa"))
-            .join(TrainerName, Discipline.trainer_id == TrainerName.id)
-            .group_by(Discipline.id, Discipline.name, Discipline.category, Discipline.capacity, TrainerName.full_name)
+            .join(Trainer, Discipline.trainer_id == Trainer.id)
+            .group_by(Discipline.id, Discipline.name, Discipline.category, Discipline.capacity, Trainer.full_name)
             .order_by(Discipline.name)
             .all()
         )
         return self.render_template("reports/occupancy.html", rows=rows)
 
-
-# Alias kept local to make the report query readable while retaining only six
-# domain tables. It is imported lazily after model declarations.
-from app.models import Trainer as TrainerName  # noqa: E402
 
 appbuilder.add_view(ReportsView(), "Reportes", icon="fa-bar-chart", category="Análisis")

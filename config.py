@@ -17,6 +17,7 @@ def _database_uri() -> str:
 
 
 SECRET_KEY = os.getenv("SECRET_KEY", "development-only-change-me")
+FLASK_DEBUG = os.getenv("FLASK_DEBUG", "0") == "1"
 SQLALCHEMY_DATABASE_URI = _database_uri()
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ENGINE_OPTIONS = {
@@ -31,4 +32,3 @@ AUTH_USER_REGISTRATION_ROLE = "Public"
 AUTH_USERNAME_CI = True
 FAB_API_MAX_PAGE_SIZE = 500
 APP_NAME = "Gym Manager"
-APP_THEME = "\n"  # Keep FAB's default theme; this setting is harmless and explicit.
